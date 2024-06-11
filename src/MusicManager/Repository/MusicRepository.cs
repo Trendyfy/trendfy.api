@@ -4,6 +4,7 @@ namespace MusicManager.Repository
 {
     public class MusicRepository : IMusicRepository
     {
+        //TODO: Implement repository
         public void AddMusic(Music music)
         {
             throw new NotImplementedException();
@@ -25,6 +26,11 @@ namespace MusicManager.Repository
         }
 
         public void UpdateMusic(Music music)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UploadMusic(Music music)
         {
             throw new NotImplementedException();
         }
