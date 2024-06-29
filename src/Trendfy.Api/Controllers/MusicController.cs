@@ -1,6 +1,6 @@
-using ComposerManager.Models;
 using Microsoft.AspNetCore.Mvc;
-using MusicManager.Services;
+using MusicAssistentAI.Interfaces;
+using MusicManager.Models;
 
 namespace Trendfy.Api.Controllers
 {
@@ -8,67 +8,38 @@ namespace Trendfy.Api.Controllers
     [Route("music")]
     public class MusicController : ControllerBase
     {
-        private readonly IMusicService _musicService;
-        public MusicController(IMusicService musicService)
+        private readonly IComposeMusicService _musicComposer;
+        public MusicController(IComposeMusicService musicComposer)
         {
-            _musicService = musicService;
+            _musicComposer = musicComposer;
+        }
+
+        [HttpPost("make")]
+        public async Task<IActionResult> CreateMusic([FromBody] CreateMusicRequest music, CancellationToken cancellationToken)
+        {
+            if (music == null)
+                return BadRequest();
+
+            var result = await _musicComposer.CreateMusicAsync(music, cancellationToken);
+            return CreatedAtAction(nameof(CreateMusic), result);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetMusicById(Guid id)
+        public async Task<IActionResult> GetMusicById(string id, CancellationToken cancellationToken)
         {
-            var music = _musicService.GetMusicById(id);
-            if (music == null)
-            {
-                return NotFound();
-            }
-            return Ok(music);
-        }
-
-        [HttpGet]
-        public IActionResult GetAllMusics()
-        {
-            var musics = _musicService.GetAllMusics();
-            return Ok(musics);
-        }
-
-        [HttpPost]
-        public IActionResult CreateMusic([FromBody] Music music)
-        {
-            if (music == null)
-            {
+            if (string.IsNullOrEmpty(id))
                 return BadRequest();
-            }
-            _musicService.CreateMusic(music);
-            return CreatedAtAction(nameof(GetMusicById), new { id = music.MusicId }, music);
+
+            var result = await _musicComposer.GetMusicByIdAsync(id, cancellationToken);
+            return CreatedAtAction(nameof(CreateMusic), result);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateMusic(Guid id, [FromBody] Music music)
+        [HttpGet("search")]
+        public async Task<ActionResult> Search([FromQuery] string query, CancellationToken cancellationToken)
         {
-            if (music == null || music.MusicId != id)
-            {
-                return BadRequest();
-            }
-            var existingMusic = _musicService.GetMusicById(id);
-            if (existingMusic == null)
-            {
-                return NotFound();
-            }
-            _musicService.UpdateMusic(music);
-            return NoContent();
+            var (results, facets) = await _musicComposer.SearchMusicTracksAsync(query, cancellationToken);
+            return Ok(new { Results = results, Facets = facets });
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteMusic(Guid id)
-        {
-            var music = _musicService.GetMusicById(id);
-            if (music == null)
-            {
-                return NotFound();
-            }
-            _musicService.DeleteMusic(id);
-            return NoContent();
-        }
     }
 }

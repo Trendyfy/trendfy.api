@@ -3,7 +3,7 @@
     public class Music
     {
         public Guid MusicId { get; set; }
-        public Guid UserId { get; set; } 
+        public Guid UserId { get; set; }
         public string Title { get; set; }
         public string Lyrics { get; set; }
         public string Genre { get; set; }
