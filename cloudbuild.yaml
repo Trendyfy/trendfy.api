@@ -33,7 +33,7 @@ options:
   substitutionOption: ALLOW_LOOSE
   logging: CLOUD_LOGGING_ONLY
 substitutions:
-  _SERVICE_NAME: trendfy-api
+  _SERVICE_NAME: trendfy-api-prd
   _DEPLOY_REGION: us-east1
   _TRIGGER_ID: 6f660f95-c963-4722-ba5e-1509b5dfb253
   _AR_HOSTNAME: us-east1-docker.pkg.dev
