@@ -21,7 +21,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicAssistentAI", "src\Domain\MusicAssistentAI\MusicAssistentAI.csproj", "{2D1DB214-129F-4274-89F3-2A00FCCA5D34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth", "src\Domain\Auth\Auth.csproj", "{FD9F90A0-1FA8-4270-924E-601E1C27E94B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth", "src\Domain\Auth\Auth.csproj", "{FD9F90A0-1FA8-4270-924E-601E1C27E94B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Soluctions Itens", "Soluctions Itens", "{F21D105D-E14B-4824-A144-36DA57BE8392}"
+	ProjectSection(SolutionItems) = preProject
+		cloudbuild.yaml = cloudbuild.yaml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
