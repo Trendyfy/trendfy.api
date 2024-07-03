@@ -2,7 +2,7 @@
 using Algolia.Search.Http;
 using Algolia.Search.Models.Search;
 
-namespace Infrastructure.Repositories.AlgoliaBase
+namespace Infrastructure.Repositories.Algolia.Base
 {
     public class AlgoliaRepositoryBase<T> : IAlgoliaRepositoryBase<T> where T : class
     {

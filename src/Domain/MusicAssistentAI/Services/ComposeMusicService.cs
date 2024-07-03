@@ -2,7 +2,7 @@
 using Infrastructure.Entities;
 using Infrastructure.HttpClients.Interfaces;
 using Infrastructure.Models.AI;
-using Infrastructure.Repositories;
+using Infrastructure.Repositories.Algolia;
 using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Models.AI;
 using MusicManager.Models;
@@ -12,9 +12,9 @@ namespace MusicAssistentAI.Services
     public class ComposeMusicService : IComposeMusicService
     {
         private readonly ISunoClient _sunoClient;
-        private readonly IMusicRepository _musicRepository;
+        private readonly IMusicAlgoliaRepository _musicRepository;
         private readonly IMapper _mapper;
-        public ComposeMusicService(IMusicRepository musicRepository, ISunoClient sunoClient, IMapper mapper)
+        public ComposeMusicService(IMusicAlgoliaRepository musicRepository, ISunoClient sunoClient, IMapper mapper)
         {
             _musicRepository = musicRepository;
             _sunoClient = sunoClient;

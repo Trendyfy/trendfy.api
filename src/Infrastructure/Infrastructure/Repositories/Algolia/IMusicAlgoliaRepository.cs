@@ -1,9 +1,9 @@
 ﻿using Infrastructure.Entities;
-using Infrastructure.Repositories.AlgoliaBase;
+using Infrastructure.Repositories.Algolia.Base;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Algolia
 {
-    public interface IMusicRepository : IAlgoliaRepositoryBase<Music>
+    public interface IMusicAlgoliaRepository : IAlgoliaRepositoryBase<Music>
     {
         Task<(IEnumerable<Music> Hits, Dictionary<string, Dictionary<string, long>> Facets)> SearchMusicTracksAsync(string query, CancellationToken cancellationToken);
     }

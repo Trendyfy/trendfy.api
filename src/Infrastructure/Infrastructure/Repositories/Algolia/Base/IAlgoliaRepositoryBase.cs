@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Repositories.AlgoliaBase
+﻿namespace Infrastructure.Repositories.Algolia.Base
 {
     public interface IAlgoliaRepositoryBase<T>
     {

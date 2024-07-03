@@ -1,15 +1,15 @@
 ﻿using Algolia.Search.Clients;
 using Algolia.Search.Models.Search;
 using Infrastructure.Entities;
-using Infrastructure.Repositories.AlgoliaBase;
+using Infrastructure.Repositories.Algolia.Base;
 
-namespace Infrastructure.Repositories
+namespace Infrastructure.Repositories.Algolia
 {
-    public class MusicRepository : AlgoliaRepositoryBase<Music>, IMusicRepository
+    public class MusicAlgoliaRepository : AlgoliaRepositoryBase<Music>, IMusicAlgoliaRepository
     {
         private const string indexName = "trendify-music";
         private readonly ISearchIndex _index;
-        public MusicRepository(ISearchClient client) : base(client, indexName)
+        public MusicAlgoliaRepository(ISearchClient client) : base(client, indexName)
         {
             _index = client.InitIndex(indexName);
         }

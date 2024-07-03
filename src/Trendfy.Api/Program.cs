@@ -4,11 +4,14 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Infrastructure.HttpClients;
 using Infrastructure.HttpClients.Interfaces;
-using Infrastructure.Repositories;
+using Infrastructure.Repositories.Algolia;
+using Infrastructure.Repositories.Firestore.Base.Infrastructure.Repositories.Firestore.Base;
+using Infrastructure.Repositories.Firestore.Base;
 using MusicAssistentAI.AutoMapper;
 using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Services;
 using System.Text;
+using Google.Cloud.Firestore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +20,7 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 builder.Services.AddScoped<IComposeMusicService, ComposeMusicService>();
-builder.Services.AddScoped<IMusicRepository, MusicRepository>();
+builder.Services.AddScoped<IMusicAlgoliaRepository, MusicAlgoliaRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpClient<ISunoClient, SunoClient>((serviceProvider, client) =>
 {
@@ -35,6 +38,9 @@ FirebaseApp.Create(new AppOptions()
 {
     Credential = GoogleCredential.FromStream(stream)
 });
+
+builder.Services.AddSingleton(FirestoreDb.Create(builder.Configuration["GoogleProjectId"]));
+builder.Services.AddScoped(typeof(IFirestoreRepositoryBase<>), typeof(FirestoreRepositoryBase<>));
 
 builder.Services.AddSingleton<ISearchClient>(sp =>
 {
