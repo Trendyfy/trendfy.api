@@ -1,17 +1,19 @@
 using Algolia.Search.Clients;
 using Auth.Services;
 using FirebaseAdmin;
+using Google.Api;
 using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Firestore;
 using Infrastructure.HttpClients;
 using Infrastructure.HttpClients.Interfaces;
 using Infrastructure.Repositories.Algolia;
-using Infrastructure.Repositories.Firestore.Base.Infrastructure.Repositories.Firestore.Base;
+using Infrastructure.Repositories.Firestore;
 using Infrastructure.Repositories.Firestore.Base;
+using Infrastructure.Repositories.Firestore.Base.Infrastructure.Repositories.Firestore.Base;
 using MusicAssistentAI.AutoMapper;
 using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Services;
 using System.Text;
-using Google.Cloud.Firestore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +23,8 @@ builder.Configuration
 
 builder.Services.AddScoped<IComposeMusicService, ComposeMusicService>();
 builder.Services.AddScoped<IMusicAlgoliaRepository, MusicAlgoliaRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpClient<ISunoClient, SunoClient>((serviceProvider, client) =>
 {
     client.BaseAddress = new Uri(builder.Configuration["Ai:ApiUrl"]);
@@ -34,12 +37,20 @@ if (string.IsNullOrEmpty(firebaseCredentialJson))
 
 var firebaseCredentialBytes = Encoding.UTF8.GetBytes(firebaseCredentialJson);
 var stream = new MemoryStream(firebaseCredentialBytes);
+var gcpCredentials = GoogleCredential.FromStream(stream);
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromStream(stream)
+    Credential = gcpCredentials
 });
 
-builder.Services.AddSingleton(FirestoreDb.Create(builder.Configuration["GoogleProjectId"]));
+var firestoreDbBuilder = new FirestoreDbBuilder
+{
+    ProjectId = builder.Configuration["Firebase:ProjectId"],
+    Credential = gcpCredentials
+};
+
+builder.Services.AddSingleton(firestoreDbBuilder.Build());
+
 builder.Services.AddScoped(typeof(IFirestoreRepositoryBase<>), typeof(FirestoreRepositoryBase<>));
 
 builder.Services.AddSingleton<ISearchClient>(sp =>

@@ -10,4 +10,8 @@
     <PackageReference Include="FirebaseAdmin" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
