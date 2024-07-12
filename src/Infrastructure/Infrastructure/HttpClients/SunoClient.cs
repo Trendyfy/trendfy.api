@@ -79,5 +79,28 @@
                 throw;
             }
         }
+
+        public async Task<string> ComposeLyricAsync(string prompt, CancellationToken cancellationToken)
+        {
+            var messages = new List<ChatMessage>
+                {
+                    new ChatMessage { Role = "assistant", Content = $"Componha a letra de uma musica: {prompt} em portugues do brasil"}
+                };
+
+            var requestBody = new
+            {
+                model = "gpt-4o",
+                messages,
+            };
+
+            var jsonPayload = JsonConvert.SerializeObject(requestBody);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync($"{_url}/chat/completions", content);
+            //    response.EnsureSuccessStatusCode();
+
+            var responseData = await response.Content.ReadAsStringAsync();
+            return responseData;
+        }
     }
 }

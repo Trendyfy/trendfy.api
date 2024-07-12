@@ -23,6 +23,15 @@ namespace Trendfy.Api.Controllers
             var result = await _musicComposer.CreateMusicAsync(music, cancellationToken);
             return CreatedAtAction(nameof(CreateMusic), result);
         }
+        [HttpPost("compose/lyric")]
+        public async Task<IActionResult> ComposeLyric([FromBody] ComposeLyricRequest request, CancellationToken cancellationToken)
+        {
+            if (request == null)
+                return BadRequest();
+
+            var result = await _musicComposer.ComposeLyricAsync(request, cancellationToken);
+            return CreatedAtAction(nameof(CreateMusic), result);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMusicById(string id, CancellationToken cancellationToken)

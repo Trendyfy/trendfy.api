@@ -19,7 +19,7 @@ namespace MusicAssistentAI.Services
             _musicRepository = musicRepository;
             _sunoClient = sunoClient;
             _mapper = mapper;
-        }
+        }       
 
         public async Task<List<MusicResponse>> CreateMusicAsync(CreateMusicRequest music, CancellationToken cancellationToken)
         {
@@ -44,6 +44,10 @@ namespace MusicAssistentAI.Services
             var responseMapped = _mapper.Map<List<MusicResponse>>(aiReponse);
             await IndexMusic(responseMapped, cancellationToken);
             return responseMapped;
+        }
+        public async Task<string> ComposeLyricAsync(ComposeLyricRequest request, CancellationToken cancellationToken)
+        {
+            return await _sunoClient.ComposeLyricAsync(request.Prompt, cancellationToken);
         }
         public async Task<MusicResponse> GetMusicByIdAsync(string id, CancellationToken cancellationToken)
         {

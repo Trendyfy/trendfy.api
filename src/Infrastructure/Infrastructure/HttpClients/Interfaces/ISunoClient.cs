@@ -8,5 +8,7 @@ namespace Infrastructure.HttpClients.Interfaces
         Task<List<AIMusicTrackResponse>> GenerateSimpleTrackAsync(AIComposeSimple prompt, CancellationToken cancellationToken);
         Task<List<AIMusicTrackResponse>> GenerateCustomTrackAsync(AIComposeCustom prompt, CancellationToken cancellationToken);
         Task<AIMusicTrackResponse> GetMusicByIdAsync(string id, CancellationToken cancellationToken);
+        Task<string> ComposeLyricAsync(string prompt, CancellationToken cancellationToken);
+
     }
 }
