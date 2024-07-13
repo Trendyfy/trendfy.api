@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions Itens", "Solution
 		cloudbuild.yaml = cloudbuild.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentProvider", "src\Domain\PaymentProvider\PaymentProvider.csproj", "{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{FD9F90A0-1FA8-4270-924E-601E1C27E94B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD9F90A0-1FA8-4270-924E-601E1C27E94B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD9F90A0-1FA8-4270-924E-601E1C27E94B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{27282A7A-DCE6-4636-BB42-5C9314D88916} = {5A3D151F-FD24-47AC-BD4B-790930B28CAA}
 		{2D1DB214-129F-4274-89F3-2A00FCCA5D34} = {D0A50BAE-AF18-4101-B18E-A8DF54CC81C4}
 		{FD9F90A0-1FA8-4270-924E-601E1C27E94B} = {D0A50BAE-AF18-4101-B18E-A8DF54CC81C4}
+		{23A91EB6-70FC-4A98-8874-DCAD7EF2A92E} = {D0A50BAE-AF18-4101-B18E-A8DF54CC81C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8006B904-23A6-4830-BF01-D9D5BEDA3A10}

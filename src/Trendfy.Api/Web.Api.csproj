@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Domain\Auth\Auth.csproj" />
     <ProjectReference Include="..\Domain\MusicAssistentAI\MusicAssistentAI.csproj" />
+    <ProjectReference Include="..\Domain\PaymentProvider\PaymentProvider.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 

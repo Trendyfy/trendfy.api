@@ -8,6 +8,7 @@
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
+    using static Google.Apis.Requests.BatchRequest;
 
     public class SunoClient : ISunoClient
     {
@@ -80,11 +81,11 @@
             }
         }
 
-        public async Task<string> ComposeLyricAsync(string prompt, CancellationToken cancellationToken)
+        public async Task<ChatCompletion> ComposeLyricAsync(string prompt, CancellationToken cancellationToken)
         {
-            var messages = new List<ChatMessage>
+            var messages = new List<ChatRequest>
                 {
-                    new ChatMessage { Role = "assistant", Content = $"Componha a letra de uma musica: {prompt} em portugues do brasil"}
+                    new ChatRequest { Role = "assistant", Content = $"Componha a letra de uma musica: {prompt} em portugues do brasil"}
                 };
 
             var requestBody = new
@@ -97,10 +98,11 @@
             var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync($"{_url}/chat/completions", content);
-            //    response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             var responseData = await response.Content.ReadAsStringAsync();
-            return responseData;
+            var result = JsonConvert.DeserializeObject<ChatCompletion>(responseData);
+            return result;
         }
     }
 }

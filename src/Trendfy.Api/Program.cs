@@ -13,6 +13,8 @@ using Infrastructure.Repositories.Firestore.Base.Infrastructure.Repositories.Fir
 using MusicAssistentAI.AutoMapper;
 using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Services;
+using PaymentProvider.Interfaces;
+using PaymentProvider.Providers;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,7 @@ builder.Services.AddScoped<IComposeMusicService, ComposeMusicService>();
 builder.Services.AddScoped<IMusicAlgoliaRepository, MusicAlgoliaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPaymentProvider, NuPayProvider>();
 builder.Services.AddHttpClient<ISunoClient, SunoClient>((serviceProvider, client) =>
 {
     client.BaseAddress = new Uri(builder.Configuration["Ai:ApiUrl"]);

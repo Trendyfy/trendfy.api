@@ -4,12 +4,13 @@ namespace Trendfy.Api.Controllers
 {
     [ApiController]
     [Route("")]
-    public class WelcomeController : ControllerBase
+    public class ApiController : ControllerBase
     {
-        public WelcomeController() { }
+        public ApiController() { }
 
         [HttpGet]
-        public string Welcome(string email, CancellationToken cancellationToken)
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public string Welcome()
         {
             return "Welcome to TrendyFy API 1.0";
         }

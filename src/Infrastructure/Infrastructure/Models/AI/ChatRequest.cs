@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Models.AI
 {
-    public class ChatMessage
+    public class ChatRequest
     {
         [JsonProperty("role")]
         public string Role { get; set; }

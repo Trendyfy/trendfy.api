@@ -4,6 +4,7 @@ using Infrastructure.HttpClients.Interfaces;
 using Infrastructure.Models.AI;
 using Infrastructure.Repositories.Algolia;
 using MusicAssistentAI.Interfaces;
+using MusicAssistentAI.Models;
 using MusicAssistentAI.Models.AI;
 using MusicManager.Models;
 
@@ -19,7 +20,7 @@ namespace MusicAssistentAI.Services
             _musicRepository = musicRepository;
             _sunoClient = sunoClient;
             _mapper = mapper;
-        }       
+        }
 
         public async Task<List<MusicResponse>> CreateMusicAsync(CreateMusicRequest music, CancellationToken cancellationToken)
         {
@@ -45,9 +46,15 @@ namespace MusicAssistentAI.Services
             await IndexMusic(responseMapped, cancellationToken);
             return responseMapped;
         }
-        public async Task<string> ComposeLyricAsync(ComposeLyricRequest request, CancellationToken cancellationToken)
+        public async Task<ComposeLyricResponse> ComposeLyricAsync(ComposeLyricRequest request, CancellationToken cancellationToken)
         {
-            return await _sunoClient.ComposeLyricAsync(request.Prompt, cancellationToken);
+            var result = await _sunoClient.ComposeLyricAsync(request.Prompt, cancellationToken);
+            var liryc = result.Choices.FirstOrDefault();
+
+            return new ComposeLyricResponse()
+            {
+                Lyric = liryc.Message.Content
+            };
         }
         public async Task<MusicResponse> GetMusicByIdAsync(string id, CancellationToken cancellationToken)
         {
@@ -58,7 +65,7 @@ namespace MusicAssistentAI.Services
         public Task<(IEnumerable<Music> Hits, Dictionary<string, Dictionary<string, long>> Facets)> SearchMusicTracksAsync(string query, CancellationToken cancellationToken)
         {
             return _musicRepository.SearchMusicTracksAsync(query, cancellationToken);
-        }      
+        }
         private async Task IndexMusic(List<MusicResponse> musicResponses, CancellationToken cancellationToken)
         {
             var entityMapped = _mapper.Map<List<Music>>(musicResponses);
