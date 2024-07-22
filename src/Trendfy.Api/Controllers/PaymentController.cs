@@ -22,6 +22,6 @@ namespace Trendfy.Api.Controllers
 
             var result = await _paymentProvider.ProcessPayment(payment, cancellationToken);
             return CreatedAtAction(nameof(Process), result);
-        }
+        }       
     }
 }

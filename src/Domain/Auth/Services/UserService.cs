@@ -38,6 +38,8 @@
         }
         public async Task<string> ResetPasswordAsync(string email, CancellationToken cancellationToken)
         {
+
+
             return await FirebaseAuth.DefaultInstance.GeneratePasswordResetLinkAsync(email);
         }
 

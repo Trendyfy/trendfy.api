@@ -26,4 +26,9 @@ RUN dotnet publish "./Web.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+COPY src/Api/Certs/private_key.pem /app/Certs/private_key.pem
+COPY src/Api/Certs/public_key.pem /app/Certs/public_key.pem
+
+
 ENTRYPOINT ["dotnet", "Web.Api.dll"]
