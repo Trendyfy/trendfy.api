@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PaymentProvider.Interfaces;
 using PaymentProvider.Models;
+using PaymentProvider.Providers.OpenPix.Models;
 
 namespace Trendfy.Api.Controllers
 {
@@ -22,6 +23,23 @@ namespace Trendfy.Api.Controllers
 
             var result = await _paymentProvider.ProcessPayment(payment, cancellationToken);
             return CreatedAtAction(nameof(Process), result);
-        }       
+        }
+
+
+        [HttpPost("webhook/openpix")]
+        public async Task<IActionResult> Webhook(TransactionReceivedEvent webhookEvent, CancellationToken cancellationToken)
+        {
+            if (webhookEvent is null)
+                return BadRequest();
+
+            var result = await _paymentProvider.OpenPixWebhook(webhookEvent, cancellationToken);
+            return CreatedAtAction(nameof(Process), result);
+        }
+
+
+
+
+
+        
     }
 }

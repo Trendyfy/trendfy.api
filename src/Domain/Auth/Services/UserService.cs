@@ -47,5 +47,10 @@
         {
             return await _userRepository.GetUserByIdAsync(id, cancellationToken);
         }
+
+        public Task<bool> SetUserPlan(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

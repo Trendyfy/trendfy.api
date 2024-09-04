@@ -14,8 +14,6 @@ using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Services;
 using PaymentProvider.Interfaces;
 using PaymentProvider.Providers.Cora;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,29 +27,13 @@ builder.Services.AddScoped<IMusicAlgoliaRepository, MusicAlgoliaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddHttpClient("CoraClient", client =>
+builder.Services.AddHttpClient("OpenPixClient", client =>
 {
-    client.BaseAddress = new Uri("https://matls-clients.api.cora.com.br/");
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
-})
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        var handler = new HttpClientHandler();
-        var basePath = Path.Combine(Directory.GetCurrentDirectory(), "Certs");
-        var certPath = Path.Combine(basePath, "certificate-prd.pem");
-        var keyPath = Path.Combine(basePath, "private-key-prd.key");
+    client.BaseAddress = new Uri("https://api.openpix.com.br/api/v1/");
+    client.DefaultRequestHeaders.Add("Authorization", builder.Configuration["OpenPix:ApiKey"]);
+});
 
-        // Criar o certificado a partir dos arquivos PEM
-        var cert = X509Certificate2.CreateFromPemFile(certPath, keyPath);
-
-        handler.ClientCertificates.Add(cert);
-
-        return handler;
-    });
-
-
-builder.Services.AddScoped<IPaymentProvider, CoraProvider>();
-builder.Services.AddScoped<IAuthenticationCoraService, AuthenticationCoraService>();
+builder.Services.AddScoped<IPaymentProvider, OpenPixProvider>();
 
 builder.Services.AddHttpClient<ISunoClient, SunoClient>((serviceProvider, client) =>
 {
