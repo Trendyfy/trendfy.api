@@ -20,14 +20,14 @@ namespace PaymentProvider.Providers.Cora
             _userService = userService;
         }
 
-        public async Task<bool> OpenPixWebhook(TransactionReceivedEvent payment, CancellationToken cancellationToken)
+        public async Task<bool> TransactionWebhook(TransactionReceivedEvent payment, CancellationToken cancellationToken)
         {
-            if (payment.Event.Equals("OPENPIX:TRANSACTION_RECEIVED"))
-            {
-                var planResult = await _userService.SetUserPlan(payment.Charge.CorrelationID);
-                if (!planResult)
-                    throw new Exception("Error while process the plan");
-            }
+        //    if (payment.Event.Equals("OPENPIX:TRANSACTION_RECEIVED"))
+        //    {
+        //        var planResult = await _userService.SetUserPlan(payment.Charge.CorrelationID);
+        //        if (!planResult)
+        //            throw new Exception("Error while process the plan");
+        //    }
             return false;
         }
 

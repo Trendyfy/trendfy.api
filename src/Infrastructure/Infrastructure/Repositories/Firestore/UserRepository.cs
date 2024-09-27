@@ -7,7 +7,7 @@ namespace Infrastructure.Repositories.Firestore
     public class UserRepository : FirestoreRepositoryBase<User>, IUserRepository
     {
         private readonly FirestoreDb _firestoreDb;
-       
+
         public UserRepository(FirestoreDb firestoreDb) : base(firestoreDb, "users")
         {
             _firestoreDb = firestoreDb;
@@ -21,24 +21,24 @@ namespace Infrastructure.Repositories.Firestore
             return docRef.Id;
         }
 
-        public Task<User> GetUserByIdAsync(string id, CancellationToken cancellationToken)
+        public async Task<User> GetUserByIdAsync(string id, CancellationToken cancellationToken)
         {
-            return GetByIdAsync(id, cancellationToken);
+            return await GetByIdAsync(id, cancellationToken);
         }
 
-        public Task<IEnumerable<User>> GetAllUsersAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<User>> GetAllUsersAsync(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken);
+            return await GetAllAsync(cancellationToken);
         }
 
-        public Task UpdateUserAsync(string id, User user, CancellationToken cancellationToken)
+        public async Task<bool> UpdateUserAsync(string id, User user, CancellationToken cancellationToken)
         {
-            return UpdateAsync(user, id, cancellationToken);
+            return await UpdateAsync(user, id, cancellationToken);
         }
 
-        public Task DeleteUserAsync(string id, CancellationToken cancellationToken)
+        public async Task<bool> DeleteUserAsync(string id, CancellationToken cancellationToken)
         {
-            return DeleteAsync(id, cancellationToken);
+            return await DeleteAsync(id, cancellationToken);
         }
     }
 

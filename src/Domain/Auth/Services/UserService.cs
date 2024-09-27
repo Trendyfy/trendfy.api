@@ -48,7 +48,12 @@
             return await _userRepository.GetUserByIdAsync(id, cancellationToken);
         }
 
-        public Task<bool> SetUserPlan(string userId)
+        public Task<bool> CreateUserTransaction(string userId, string transactionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> AddCredits(string transactionId, string userId, long amount)
         {
             throw new NotImplementedException();
         }

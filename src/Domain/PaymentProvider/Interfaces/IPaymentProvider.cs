@@ -6,6 +6,6 @@ namespace PaymentProvider.Interfaces
     public interface IPaymentProvider
     {
         Task<bool> ProcessPayment(PaymentRequest payment, CancellationToken cancellationToken);
-        Task<bool> OpenPixWebhook(TransactionReceivedEvent payment, CancellationToken cancellationToken);
+        Task<bool> TransactionWebhook(TransactionReceivedEvent payment, CancellationToken cancellationToken);
     }
 }

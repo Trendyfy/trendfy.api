@@ -8,6 +8,6 @@ namespace Auth.Services
         Task<string> RegisterUserAsync(UserRequest userRequest, CancellationToken cancellationToken);
         Task<string> ResetPasswordAsync(string email, CancellationToken cancellationToken);
         Task<User> GetUserById(string id, CancellationToken cancellationToken);
-        Task<bool> SetUserPlan(string userId);
+        Task<bool> AddCredits(string transactionId, string userId, long amount);
     }
 }

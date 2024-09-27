@@ -9,11 +9,12 @@ using Infrastructure.Repositories.Algolia;
 using Infrastructure.Repositories.Firestore;
 using Infrastructure.Repositories.Firestore.Base;
 using Infrastructure.Repositories.Firestore.Base.Infrastructure.Repositories.Firestore.Base;
+using Microsoft.Extensions.DependencyInjection;
 using MusicAssistentAI.AutoMapper;
 using MusicAssistentAI.Interfaces;
 using MusicAssistentAI.Services;
 using PaymentProvider.Interfaces;
-using PaymentProvider.Providers.Cora;
+using PaymentProvider.Providers.IoPay;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,20 +26,22 @@ builder.Configuration
 builder.Services.AddScoped<IComposeMusicService, ComposeMusicService>();
 builder.Services.AddScoped<IMusicAlgoliaRepository, MusicAlgoliaRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddHttpClient("OpenPixClient", client =>
+builder.Services.AddHttpClient("IOPayClient", client =>
 {
-    client.BaseAddress = new Uri("https://api.openpix.com.br/api/v1/");
-    client.DefaultRequestHeaders.Add("Authorization", builder.Configuration["OpenPix:ApiKey"]);
+    client.BaseAddress = new Uri(builder.Configuration["IOPay:ApiUrl"]);
 });
 
-builder.Services.AddScoped<IPaymentProvider, OpenPixProvider>();
+builder.Services.AddScoped<IPaymentProvider, IOPayService>();
 
 builder.Services.AddHttpClient<ISunoClient, SunoClient>((serviceProvider, client) =>
 {
     client.BaseAddress = new Uri(builder.Configuration["Ai:ApiUrl"]);
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {builder.Configuration["Ai:ApiToken"]}");
+
 });
 
 var firebaseCredentialJson = builder.Configuration["Firebase:AdminSDK"];
