@@ -2,6 +2,6 @@
 {
     public class ComposeLyricRequest
     {
-        public string? Prompt { get; set; }
+        public string Prompt { get; set; }
     }
 }
